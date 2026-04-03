@@ -30,6 +30,10 @@ const Record = sequelize.define("Record", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  }
 });
 
 module.exports = Record;

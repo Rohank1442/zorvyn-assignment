@@ -1,11 +1,18 @@
 const express = require("express");
+const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
+const recordRoutes = require("./routes/record.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
+const { globalLimiter } = require("./middleware/rateLimit.middleware");
+
+
 const app = express();
 
+app.use(globalLimiter);
 app.use(express.json());
-
-// Routes
-// app.use("/api/users", require("./routes/user.routes"));
-// app.use("/api/records", require("./routes/record.routes"));
-// app.use("/api/dashboard", require("./routes/dashboard.routes"));
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/records", recordRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 module.exports = app;
