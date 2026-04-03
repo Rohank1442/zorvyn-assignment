@@ -21,3 +21,24 @@ exports.updateUserValidation = [
   body("role").optional().isIn(["viewer", "analyst"]),
   body("isActive").optional().isBoolean(),
 ];
+
+exports.registerValidation = [
+  body("name").notEmpty().withMessage("Name is required"),
+
+  body("email")
+    .isEmail()
+    .withMessage("Valid email required"),
+
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters"),
+
+  body("role")
+    .isIn(["admin", "analyst", "viewer"])
+    .withMessage("Role must be admin, analyst, or viewer"),
+
+  body("isActive")
+    .optional()
+    .isBoolean()
+    .withMessage("isActive must be a boolean"),
+];

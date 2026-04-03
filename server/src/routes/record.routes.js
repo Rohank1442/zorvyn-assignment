@@ -14,13 +14,23 @@ const { validate } = require("../middleware/validation.middleware");
 
 router.use(authenticate);
 
-router.get("/", queryValidation, validate, recordController.getAllRecords);
-router.get("/", recordController.getAllRecords);
-router.get("/:id", recordController.getRecordById);
+router.get(
+  "/",
+  authorize("admin", "analyst"),
+  queryValidation,
+  validate,
+  recordController.getAllRecords
+);
+
+router.get(
+  "/:id",
+  authorize("admin", "analyst"),
+  recordController.getRecordById
+);
 
 router.post(
   "/",
-  authorize("admin", "analyst"),
+  authorize("admin"),
   createRecordValidation,
   validate,
   recordController.createRecord
@@ -28,7 +38,7 @@ router.post(
 
 router.put(
   "/:id",
-  authorize("admin", "analyst"),
+  authorize("admin"),
   updateRecordValidation,
   validate,
   recordController.updateRecord
@@ -36,7 +46,7 @@ router.put(
 
 router.delete(
   "/:id",
-  authorize("admin", "analyst"),
+  authorize("admin"),
   recordController.deleteRecord
 );
 

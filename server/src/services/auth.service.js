@@ -23,7 +23,8 @@ exports.register = async ({ name, email, password, role }) => {
 exports.login = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
   if (!user) throw new Error("Invalid credentials");
-
+  if (!user.isActive) throw new Error("Account is deactivated");
+  
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error("Invalid credentials");
 
